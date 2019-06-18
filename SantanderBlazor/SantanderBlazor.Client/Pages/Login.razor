@@ -1,27 +1,30 @@
 ﻿@layout LoginLayout
 @inject HttpClient Http
+@inject IUriHelper uriHelper
 @using SantanderBlazor.Shared.Models.Entidades;
 @using SantanderBlazor.Shared.Models.Entidades.Respuestas;
 
 @page  "/"
+<link href="/css/custom_login.css" rel="stylesheet" />
+
 <div class="slideshow">
 
     <div class="container-login">
         <div class="section-login">
-            <form target="supernetWindow" action="#" method="post" id="formalogin" name="oculForm">
+            <form action="#" method="post" id="formalogin" name="oculForm">
                 <h2 style="color: whitesmoke;">Banca digital</h2>
                 <div class="login__row">
                     <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8"></path>
                     </svg>
-                    <input type="text" name="usuario" class="login__input name" placeholder="Numero de Cliente" required="">
+                    <input type="text" name="usuario" class="login__input name" placeholder="Numero de Cliente" required="" bind="@User" />
                     <input type="checkbox" class="btn-invisible" tabindex="-1">
                 </div>
                 <div class="login__row">
                     <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0"></path>
                     </svg>
-                    <input type="password" name="password" id="password" class="login__input pass" placeholder="Contraseña" required="">
+                    <input bind="@Password" type="password" name="password" id="password" class="login__input pass" placeholder="Contraseña" required="" />
 
                     <svg class="login__icon reveal  svg-icon2 svg-hide" style="display:none;" id="open-eye" viewBox="0 0 20 20">
                         <path d="M10,14.5c-3.4,0-6.7-1.6-9.9-4.6L0,9.7l0.1-0.2c0,0,3.8-4.4,9.4-4.7c3.5-0.2,7,1.4,10.3,4.6L20,9.7l-0.1,0.2	c0,0-3.8,4.4-9.3,4.6C10.4,14.5,10.2,14.5,10,14.5z M0.7,9.7c3.2,3,6.5,4.5,9.9,4.3c4.7-0.2,8-3.5,8.8-4.3c-3.1-3-6.4-4.5-9.8-4.3	C4.8,5.6,1.4,8.9,0.7,9.7z"></path>
@@ -36,7 +39,7 @@
                 </div>
                 <div class="access">
                     <div>
-                        <input onclick="@LoginAsync" type="button" value="Ingresar" class="btn-red link-button" id="splg.btnEntrar" />
+                        <input onclick="@LoginAsync" onsubmit="@LoginAsync" type="button" value="Ingresar" class="btn-red link-button" id="splg.btnEntrar" />
                     </div>
                 </div>
             </form>
@@ -53,12 +56,20 @@
 </div>
 
 @functions {
-
+    public string User { get; set; }
+    public string Password { get; set; }
     public async Task LoginAsync()
     {
+
         Cliente cliente = new Cliente();
+        cliente.usuario = Int32.Parse(User);
+        cliente.Password = Password;
         RespuestaLogin respuesta = new RespuestaLogin();
         respuesta = await Http.PostJsonAsync<RespuestaLogin>("api/Login/", cliente);
-
+        if (respuesta.login == true)
+        {
+            uriHelper.NavigateTo("\\FetchData");
+        }
     }
+
 }

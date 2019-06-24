@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SantanderBlazor.Shared.Models.Entidades;
 
 namespace SantanderBlazor.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class SampleDataController : Controller
     {
         private static string[] Summaries = new[]
@@ -15,7 +16,7 @@ namespace SantanderBlazor.Server.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();

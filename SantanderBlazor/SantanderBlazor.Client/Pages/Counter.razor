@@ -1,4 +1,5 @@
 ﻿@layout MainLayout
+@inject IMatToaster Toaster
 
 @page "/counter"
 
@@ -6,13 +7,26 @@
 
 <p>Current count: @currentCount</p>
 
-<button class="btn btn-primary" onclick="@IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
 
-@functions {
+@code {
     int currentCount = 0;
 
     void IncrementCount()
     {
         currentCount++;
+        Toaster.Add(currentCount.ToString(), MatToastType.Danger, "Title", " ", config =>
+            {
+                config.ShowCloseButton = true;
+                config.ShowProgressBar = false;
+                config.MaximumOpacity = 100;
+
+                config.ShowTransitionDuration = 500;
+                config.VisibleStateDuration = 500;
+                config.HideTransitionDuration = 500;
+
+                config.RequireInteraction = true;
+
+            });
     }
 }

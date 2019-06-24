@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using SantanderBlazor.Shared.Models.Entidades;
 using SantanderBlazor.Server.Models.DataAccess;
-
 namespace SantanderBlazor.Server.Models.Helpers
 {
     class SantanderBlazorHelper
     {
-        internal static List<Sucursal> ObtenerSucursales(out ResultadoOperacion resultadoOperacion)
+       /* internal static List<Sucursal> ObtenerSucursales(out ResultadoOperacion resultadoOperacion)
         {
             List<Sucursal> sucursales = new List<Sucursal>();
             resultadoOperacion = new ResultadoOperacion();
@@ -35,7 +34,7 @@ namespace SantanderBlazor.Server.Models.Helpers
             }
             return sucursales;
         }
-
+        */
         internal static bool LoginCliente(int idCliente, string password, out ResultadoOperacion resultadoOperacion)
         {
             resultadoOperacion = new ResultadoOperacion();

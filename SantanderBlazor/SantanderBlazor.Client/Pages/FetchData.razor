@@ -1,7 +1,10 @@
 ﻿@layout MainLayout
 @page "/fetchdata"
 @using SantanderBlazor.Shared
+@using SantanderBlazor.Shared.Models.Entidades
+
 @inject HttpClient Http
+@inject IMatToaster Toaster
 
 <h1>Weather forecast</h1>
 
@@ -36,7 +39,7 @@ else
     </table>
 }
 
-@functions {
+@code {
     WeatherForecast[] forecasts;
 
     protected override async Task OnInitAsync()

@@ -5,21 +5,4 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Models\DataAccess\**" />
-    <Compile Remove="Models\Helpers\**" />
-    <EmbeddedResource Remove="Models\DataAccess\**" />
-    <EmbeddedResource Remove="Models\Helpers\**" />
-    <None Remove="Models\DataAccess\**" />
-    <None Remove="Models\Helpers\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Entidades\Solicitudes\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="1.0.19128.1-Preview" />
-  </ItemGroup>
-
 </Project>

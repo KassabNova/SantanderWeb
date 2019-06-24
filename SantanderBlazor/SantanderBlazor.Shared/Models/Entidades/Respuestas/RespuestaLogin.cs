@@ -6,8 +6,8 @@ namespace SantanderBlazor.Shared.Models.Entidades.Respuestas
 {
     public class RespuestaLogin
     {
-        public ResultadoOperacion ResultadoOperacion;
+        public ResultadoOperacion resultadoOperacion { get; set; }
 
-        public bool login;
+        public bool login { get; set; }
     }
 }

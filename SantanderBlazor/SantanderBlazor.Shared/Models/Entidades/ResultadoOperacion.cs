@@ -6,9 +6,9 @@ namespace SantanderBlazor.Shared.Models.Entidades
 {
     public class ResultadoOperacion
     {
-        public TipoResultado Tipo;
+        public TipoResultado Tipo { get; set; }
 
-        public String Detalle;
+        public string Detalle { get; set; }
 
         public ResultadoOperacion()
         {

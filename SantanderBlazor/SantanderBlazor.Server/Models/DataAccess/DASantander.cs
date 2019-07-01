@@ -10,7 +10,7 @@ namespace SantanderBlazor.Server.Models.DataAccess
     {
         private static string CONEXIONDEV = "Data Source = localhost; Initial Catalog = Santander; Integrated Security = SSPI";
         private static string CONEXION = "Data Source = localhost; Initial Catalog = Santander;  Persist Security Info=True; User ID = Kebab; Password=kassab123;Pooling=False";
-
+        private static string CONEXIONREMOTA = "Data Source = 189.209.218.117,1433 ; Initial Catalog = Santander;  Persist Security Info=True; User ID = Kebab; Password=kassab123;Pooling=False";
         internal static List<Sucursal> ObtenerSucursales()
         {
             List<Sucursal> sucursales = new List<Sucursal>();

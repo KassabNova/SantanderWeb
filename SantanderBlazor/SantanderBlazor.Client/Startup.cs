@@ -16,6 +16,9 @@ namespace SantanderBlazor.Client
                 config.ShowCloseButton = true;
                 config.MaxDisplayedToasts = 1;
             });
+
+            services.AddTelerikBlazor();
+
         }
 
         public void Configure(IComponentsApplicationBuilder app)

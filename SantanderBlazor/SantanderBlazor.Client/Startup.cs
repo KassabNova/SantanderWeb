@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using MatBlazor;
+using Microsoft.AspNetCore.Components;
+using Blazored.LocalStorage;
 
 namespace SantanderBlazor.Client
 {
@@ -16,9 +18,9 @@ namespace SantanderBlazor.Client
                 config.ShowCloseButton = true;
                 config.MaxDisplayedToasts = 1;
             });
+            services.AddBlazoredLocalStorage();
 
             services.AddTelerikBlazor();
-
         }
 
         public void Configure(IComponentsApplicationBuilder app)

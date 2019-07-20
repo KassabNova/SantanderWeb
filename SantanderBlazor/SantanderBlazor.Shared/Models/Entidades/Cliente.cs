@@ -21,6 +21,8 @@ namespace SantanderBlazor.Shared.Models.Entidades
         public String FechaCreacion { get; set; }
 
         public String UltimaConexion { get; set; }
+
+        public bool Authenticado { get; set; }
     }
 
 }

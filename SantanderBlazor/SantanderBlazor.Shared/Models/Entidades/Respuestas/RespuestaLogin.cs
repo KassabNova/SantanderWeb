@@ -9,5 +9,10 @@ namespace SantanderBlazor.Shared.Models.Entidades.Respuestas
         public ResultadoOperacion resultadoOperacion { get; set; }
 
         public bool login { get; set; }
+
+        public string token { get; set; }
+
+        public int usuario { get; set; }
+
     }
 }

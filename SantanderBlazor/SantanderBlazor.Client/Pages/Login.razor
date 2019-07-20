@@ -3,9 +3,6 @@
 @using SantanderBlazor.Shared.Models.Entidades
 @using SantanderBlazor.Shared.Models.Entidades.Respuestas
 
-@inject HttpClient Http
-@inject IUriHelper uriHelper
-@inject IMatToaster Toaster
 
 
 
@@ -49,61 +46,82 @@
             </form>
             <div class="toolsTips" id="idregistro">
                 <div>
-                    <a href="https://www.santander.com.mx/MiSitioPrivado/registro/identificacion" target="_blank"  rel="noreferrer" class="red">Regístrate</a>
+                    <a href="https://www.santander.com.mx/MiSitioPrivado/registro/identificacion" target="_blank" rel="noreferrer" class="red">Regístrate</a>
                 </div>
             </div>
             <div class="cont-tips-seguridad">
-                <a href="https://www.santander.com.mx/personas/ayuda/tips-seguridad.html" rel="noreferrer" >Tips de Seguridad</a>
+                <a href="https://www.santander.com.mx/personas/ayuda/tips-seguridad.html" rel="noreferrer">Tips de Seguridad</a>
             </div>
         </div>
     </div>
 </div>
 
 @code {
-public string User { get; set; }
-public string Password { get; set; }
-RespuestaLogin respuesta = new RespuestaLogin();
-bool login = false;
-
-public async Task LoginAsync()
-{
-    bool parseResult;
-    int usuario;
-
-    parseResult = Int32.TryParse(User, out usuario);
-
-    //Console.WriteLine(respuesta.resultadoOperacion.Detalle);
-    
-    if (parseResult  && Password != null && Password.Length > 0)
+    public string User { get; set; }
+    public string Password { get; set; }
+    RespuestaLogin respuesta = new RespuestaLogin();
+    bool login = false;
+    private readonly HttpClient _httpClient;
+    private readonly AuthenticationStateProvider _authenticationStateProvider;
+    public async Task LoginAsync()
     {
-        Cliente cliente = new Cliente();
-        cliente.usuario = usuario;
-        cliente.Password = Password;
+        bool parseResult;
+        int usuario;
 
-        respuesta = await Http.PostJsonAsync<RespuestaLogin>("api/Login/loginRespuesta", cliente);
+        parseResult = Int32.TryParse(User, out usuario);
 
-        if (respuesta.login == true)
+        //Console.WriteLine(respuesta.resultadoOperacion.Detalle);
+
+        if (parseResult && Password != null && Password.Length > 0)
         {
-            Toaster.Add("Bienvenido!", MatToastType.Success, "Acceso Correcto", " ", config =>
+            Cliente cliente = new Cliente();
+            cliente.usuario = usuario;
+            cliente.Password = Password;
+
+            respuesta = await Http.PostJsonAsync<RespuestaLogin>("api/Login/loginRespuesta", cliente);
+
+            if (respuesta.login == true)
             {
-                config.ShowCloseButton = true;
-                config.ShowProgressBar = true;
-                config.MaximumOpacity = 100;
+                Toaster.Add("Bienvenido!", MatToastType.Success, "Acceso Correcto", " ", config =>
+                {
+                    config.ShowCloseButton = true;
+                    config.ShowProgressBar = true;
+                    config.MaximumOpacity = 100;
 
-                config.ShowTransitionDuration = 250;
-                config.VisibleStateDuration = 1500;
-                config.HideTransitionDuration = 250;
-                
-                config.RequireInteraction = false;
+                    config.ShowTransitionDuration = 250;
+                    config.VisibleStateDuration = 1500;
+                    config.HideTransitionDuration = 250;
 
-            });
-            uriHelper.NavigateTo("\\FetchData");
+                    config.RequireInteraction = false;
 
+                });
+                await localStorage.SetItemAsync("authToken", respuesta.token);
+                uriHelper.NavigateTo("\\FetchData");
+
+            }
+            else
+            {
+
+                Toaster.Add(respuesta.resultadoOperacion.Detalle, MatToastType.Danger, "Error", " ", config =>
+                {
+                    config.ShowCloseButton = true;
+                    config.ShowProgressBar = true;
+                    config.MaximumOpacity = 100;
+
+                    config.ShowTransitionDuration = 250;
+                    config.VisibleStateDuration = 1500;
+                    config.HideTransitionDuration = 250;
+
+                    config.RequireInteraction = false;
+
+                });
+                Console.WriteLine(respuesta.resultadoOperacion.Detalle);
+
+            }
         }
         else
         {
-
-            Toaster.Add(respuesta.resultadoOperacion.Detalle, MatToastType.Danger, "Error", " ", config =>
+            Toaster.Add("Usuario y Password", MatToastType.Warning, "Campos Necesarios", " ", config =>
             {
                 config.ShowCloseButton = true;
                 config.ShowProgressBar = true;
@@ -116,26 +134,7 @@ public async Task LoginAsync()
                 config.RequireInteraction = false;
 
             });
-            Console.WriteLine(respuesta.resultadoOperacion.Detalle);
-
         }
     }
-    else
-    {
-        Toaster.Add("Usuario y Password", MatToastType.Warning, "Campos Necesarios", " ", config =>
-        {
-            config.ShowCloseButton = true;
-            config.ShowProgressBar = true;
-            config.MaximumOpacity = 100;
-
-            config.ShowTransitionDuration = 250;
-            config.VisibleStateDuration = 1500;
-            config.HideTransitionDuration = 250;
-
-            config.RequireInteraction = false;
-
-        });
-    }
-}
 
 }

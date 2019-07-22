@@ -24,33 +24,8 @@ namespace SantanderBlazor.Server.Controllers
         {
             _configuration = configuration;
         }
-        [HttpGet]
-        public RespuestaCliente Cliente()
-        {
-            RespuestaCliente respuesta = new RespuestaCliente();
-            List<Tarjeta> tarjetas = new List<Tarjeta>();
-            double saldo = 0;
-            Cliente cliente = new Cliente();
-            //tarjetas = SantanderHelper.ObtenerTarjetas(cliente.usuario, out respuesta.ResultadoOperacion);
-            //SantanderBlazorHelper.ObtenerTarjetas(cliente.usuario, out respuesta.ResultadoOperacion);
-            if (tarjetas != null && tarjetas.Count() > 0)
-            {
-                foreach (Tarjeta tarjeta in tarjetas)
-                {
-                    saldo += tarjeta.Saldo;
-                    tarjeta.usuario = cliente.usuario;
-                }
-            }
-            respuesta.tarjetas = tarjetas;
-            respuesta.saldo = saldo;
-            respuesta.cliente = cliente;
-
-
-            return respuesta;
-        }
-
-       
-        public bool isAuthenticated()
+        
+        public  bool isAuthenticated()
         {
             string authHeader = this.HttpContext.Request.Headers["Authorization"];
             string jwtEncodedString = authHeader.Substring(7); // trim 'Bearer ' from the start 

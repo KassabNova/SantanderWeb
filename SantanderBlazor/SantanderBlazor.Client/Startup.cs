@@ -16,7 +16,7 @@ namespace SantanderBlazor.Client
                 config.PreventDuplicates = true;
                 config.NewestOnTop = true;
                 config.ShowCloseButton = true;
-                config.MaxDisplayedToasts = 1;
+                config.MaxDisplayedToasts = 100;
             });
             services.AddBlazoredLocalStorage();
 

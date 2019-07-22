@@ -2,6 +2,7 @@
 @page  "/"
 @using SantanderBlazor.Shared.Models.Entidades
 @using SantanderBlazor.Shared.Models.Entidades.Respuestas
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 
 
@@ -95,7 +96,9 @@
                     config.RequireInteraction = false;
 
                 });
+
                 await localStorage.SetItemAsync("authToken", respuesta.token);
+
                 uriHelper.NavigateTo("\\FetchData");
 
             }

@@ -31,43 +31,4 @@
 
 
 
-    protected override async Task OnInitAsync()
-    {
-        var savedToken = await localStorage.GetItemAsync<string>("authToken");
-
-        if (string.IsNullOrWhiteSpace(savedToken))
-        {
-            uriHelper.NavigateTo("\\");
-        }
-        else
-        {
-            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
-
-            bool auth = await Http.GetJsonAsync<bool>("api/Authentication/isAuthenticated");
-            if (auth == false)
-            {
-                uriHelper.NavigateTo("\\");
-
-            }
-            else
-            {
-                Toaster.Add("Lo lograste!", MatToastType.Success, "LocalStorage jalando", " ", config =>
-                {
-                    config.ShowCloseButton = true;
-                    config.ShowProgressBar = true;
-                    config.MaximumOpacity = 100;
-
-                    config.ShowTransitionDuration = 250;
-                    config.VisibleStateDuration = 1500;
-                    config.HideTransitionDuration = 250;
-
-                    config.RequireInteraction = false;
-
-                });
-            }
-
-        }
-    }
-
-
 }

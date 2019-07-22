@@ -67,7 +67,7 @@ namespace SantanderBlazor.Server.Models.Helpers
             return login;
         }
 
-        /*
+        
         internal static List<Movimiento> ObtenerMovimientos(string numTarjeta, out ResultadoOperacion resultadoOperacion)
         {
             List<Movimiento> movimientos = new List<Movimiento>();
@@ -76,7 +76,7 @@ namespace SantanderBlazor.Server.Models.Helpers
             {
 
                 movimientos = DASantander.ObtenerMovimientos(numTarjeta);
-                if (movimientos != null && movimientos.Count() > 0)
+                if (movimientos != null && movimientos.Count > 0)
                 {
 
                     resultadoOperacion.Tipo = TipoResultado.NO_ERROR;
@@ -105,7 +105,7 @@ namespace SantanderBlazor.Server.Models.Helpers
             {
 
                 creditos = DASantander.ObtenerCreditos(idCliente);
-                if (creditos != null && creditos.Count() > 0)
+                if (creditos != null && creditos.Count > 0)
                 {
 
                     resultadoOperacion.Tipo = TipoResultado.NO_ERROR;
@@ -134,7 +134,7 @@ namespace SantanderBlazor.Server.Models.Helpers
             {
 
                 tarjetas = DASantander.ObtenerTarjetas(idCliente);
-                if (tarjetas != null && tarjetas.Count() > 0)
+                if (tarjetas != null && tarjetas.Count > 0)
                 {
 
                     resultadoOperacion.Tipo = TipoResultado.NO_ERROR;
@@ -239,6 +239,5 @@ namespace SantanderBlazor.Server.Models.Helpers
             return respuesta;
         }
 
-        */
     }
 }

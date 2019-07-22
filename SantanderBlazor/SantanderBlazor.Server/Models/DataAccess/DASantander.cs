@@ -114,7 +114,67 @@ namespace SantanderBlazor.Server.Models.DataAccess
 
             return login;
         }
-        /*
+
+        internal static List<Tarjeta> ObtenerTarjetas(int idCliente)
+        {
+            List<Tarjeta> tarjetas = new List<Tarjeta>();
+
+            SqlConnection conexion = new SqlConnection(CONEXION);
+
+            string query = "SELECT C.IdCliente, T.NumTarjeta,  T.NumCuenta, T.Saldo, T.LimiteCredito, T.Tipo FROM tblTarjeta T " +
+            "JOIN tblCuenta C on C.NumCuenta = T.NumCuenta WHERE C.IdCliente = " + idCliente.ToString();
+            try
+            {
+                using (conexion)
+                {
+                    using (SqlCommand comando = new SqlCommand(query, conexion))
+                    {
+
+                        comando.CommandTimeout = 600;
+                        comando.CommandType = CommandType.Text;
+                        conexion.Open();
+                        using (SqlDataReader lector = comando.ExecuteReader())
+                        {
+                            if (lector.HasRows)
+                            {
+                                while (lector.Read())
+                                {
+                                    tarjetas.Add(new Tarjeta()
+                                    {
+
+                                        NumTarjeta = lector["NumTarjeta"].ToString(),
+                                        NumCuenta = Int32.Parse(lector["NumCuenta"].ToString()),
+                                        Saldo = Double.Parse(lector["Saldo"].ToString()),
+                                        Tipo = lector["Tipo"].ToString(),
+                                        LimiteCredito = lector["LimiteCredito"].ToString(),
+
+                                    });
+
+                                }
+                            }
+                            conexion.Close();
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+                tarjetas = null;
+            }
+            finally
+            {
+                if (conexion != null && conexion.State != ConnectionState.Closed)
+                {
+                    conexion.Close();
+                }
+            }
+
+            return tarjetas;
+        }
+       
+        
+        
         internal static List<Movimiento> ObtenerMovimientos(string numTarjeta)
         {
             List<Movimiento> movimientos = new List<Movimiento>();
@@ -235,63 +295,7 @@ namespace SantanderBlazor.Server.Models.DataAccess
             return creditos;
         }
 
-        internal static List<Tarjeta> ObtenerTarjetas(int idCliente)
-        {
-            List<Tarjeta> tarjetas = new List<Tarjeta>();
-
-            SqlConnection conexion = new SqlConnection(CONEXION);
-
-            string query = "SELECT C.IdCliente, T.NumTarjeta,  T.NumCuenta, T.Saldo, T.LimiteCredito, T.Tipo FROM tblTarjeta T " +
-            "JOIN tblCuenta C on C.NumCuenta = T.NumCuenta WHERE C.IdCliente = " + idCliente.ToString();
-            try
-            {
-                using (conexion)
-                {
-                    using (SqlCommand comando = new SqlCommand(query, conexion))
-                    {
-
-                        comando.CommandTimeout = 600;
-                        comando.CommandType = CommandType.Text;
-                        conexion.Open();
-                        using (SqlDataReader lector = comando.ExecuteReader())
-                        {
-                            if (lector.HasRows)
-                            {
-                                while (lector.Read())
-                                {
-                                    tarjetas.Add(new Tarjeta()
-                                    {
-
-                                        NumTarjeta = lector["NumTarjeta"].ToString(),
-                                        NumCuenta = Int32.Parse(lector["NumCuenta"].ToString()),
-                                        Saldo = Double.Parse(lector["Saldo"].ToString()),
-                                        Tipo = lector["Tipo"].ToString(),
-                                        LimiteCredito = lector["LimiteCredito"].ToString(),
-
-                                    });
-
-                                }
-                            }
-                            conexion.Close();
-                        }
-                    }
-                }
-
-            }
-            catch
-            {
-                tarjetas = null;
-            }
-            finally
-            {
-                if (conexion != null && conexion.State != ConnectionState.Closed)
-                {
-                    conexion.Close();
-                }
-            }
-
-            return tarjetas;
-        }
+        
 
         internal static bool RegistrarMovimiento(string idTarjetaOrigen, double monto, string detalle)
         {
@@ -385,7 +389,7 @@ namespace SantanderBlazor.Server.Models.DataAccess
             }
             return respuesta;
         }
-        */
+        
     }
 
 }

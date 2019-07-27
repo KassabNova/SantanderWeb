@@ -1,23 +1,23 @@
-﻿@inherits LayoutComponentBase
-@using Telerik.Blazor.Components.RootComponent
+﻿@using MatBlazor
+@inject IUriHelper uriHelper
+@inherits LayoutComponentBase
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject IMatToaster Toaster
 
-<TelerikRootComponent>
-    <div class="sidebar">
-        <NavMenu />
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <MatButton Raised="true" Style="margin-left:auto" @onclick="@logout" TrailingIcon="exit_to_app">Cerrar Sesion</MatButton>
+
     </div>
 
-    <div class="main">
-        <div class="top-row px-4">
-            <MatButton Raised="true" Style="margin-left:auto" @onclick="@logout" TrailingIcon="exit_to_app">Cerrar Sesion</MatButton>
-
-        </div>
-
-        <div class="content px-4">
-            @Body
-        </div>
+    <div class="content px-4">
+        @Body
     </div>
-</TelerikRootComponent>
+</div>
 
 
 @code

@@ -41,12 +41,34 @@ else
 
 @code {
     WeatherForecast[] forecasts;
-
     protected override async Task OnInitAsync()
     {
-       
-               forecasts = await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts");
+        var savedToken = await localStorage.GetItemAsync<string>("authToken");
 
-              
+        if (string.IsNullOrWhiteSpace(savedToken))
+        {
+            uriHelper.NavigateTo("\\");
+        }
+        else
+        {
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
+
+            bool auth = await Http.GetJsonAsync<bool>("api/Authentication/isAuthenticated");
+            if (auth == false)
+            {
+                await localStorage.RemoveItemAsync("authToken");
+
+                uriHelper.NavigateTo("\\");
+
+            }
+            else
+            {
+                forecasts = await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts");
+
+            }
+
+        }
     }
+
+
 }

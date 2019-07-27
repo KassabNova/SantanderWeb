@@ -5,3 +5,34 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+
+@code {
+    protected override async Task OnInitAsync()
+    {
+        var savedToken = await localStorage.GetItemAsync<string>("authToken");
+
+        if (string.IsNullOrWhiteSpace(savedToken))
+        {
+            uriHelper.NavigateTo("\\");
+        }
+        else
+        {
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
+
+            bool auth = await Http.GetJsonAsync<bool>("api/Authentication/isAuthenticated");
+            if (auth == false)
+            {
+                await localStorage.RemoveItemAsync("authToken");
+
+                uriHelper.NavigateTo("\\");
+
+            }
+            else
+            {
+
+            }
+
+        }
+    }
+}

@@ -20,7 +20,6 @@ namespace SantanderBlazor.Client
             });
             services.AddBlazoredLocalStorage();
 
-            services.AddTelerikBlazor();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

@@ -71,14 +71,10 @@ namespace SantanderBlazor.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                #if DEBUG
                 endpoints.MapFallbackToClientSideBlazor<Client.Startup>("index.html");
-                #else
-                endpoints.MapFallbackToClientSideBlazor<Client.Startup>("_content/santanderblazorclient/index.html");
-                #endif
-            });
-            }
 
+            });
+        }
 
     }
 }

@@ -13,7 +13,9 @@
     <div class="container-login">
         <div class="section-login">
             <form action="#" method="post" id="formalogin" name="oculForm">
+
                 <h2 style="color: whitesmoke;">Banca digital</h2>
+               
                 <div class="login__row">
                     <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8"></path>
@@ -25,7 +27,7 @@
                     <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0"></path>
                     </svg>
-                    <input @bind="@Password" type="password" name="password" id="password" class="login__input pass" placeholder="Contraseña" required="" />
+                    <input  @bind="@Password" type="password" name="password" id="password" class="login__input pass" placeholder="Contraseña" required="" />
 
                     <svg class="login__icon reveal  svg-icon2 svg-hide" style="display:none;" id="open-eye" viewBox="0 0 20 20">
                         <path d="M10,14.5c-3.4,0-6.7-1.6-9.9-4.6L0,9.7l0.1-0.2c0,0,3.8-4.4,9.4-4.7c3.5-0.2,7,1.4,10.3,4.6L20,9.7l-0.1,0.2	c0,0-3.8,4.4-9.3,4.6C10.4,14.5,10.2,14.5,10,14.5z M0.7,9.7c3.2,3,6.5,4.5,9.9,4.3c4.7-0.2,8-3.5,8.8-4.3c-3.1-3-6.4-4.5-9.8-4.3	C4.8,5.6,1.4,8.9,0.7,9.7z"></path>
@@ -46,7 +48,7 @@
             </form>
             <div class="toolsTips" id="idregistro">
                 <div>
-                    <a href="https://www.santander.com.mx/MiSitioPrivado/registro/identificacion" target="_blank" rel="noreferrer" class="red">Regístrate</a>
+                    <a href="" target="_blank" rel="noreferrer" class="red">Regístrate</a>
                 </div>
             </div>
             <div class="cont-tips-seguridad">
@@ -59,6 +61,7 @@
 @code {
     public string User { get; set; }
     public string Password { get; set; }
+    public Cliente test   { get; set; }
     RespuestaLogin respuesta = new RespuestaLogin();
     bool login = false;
     private readonly HttpClient _httpClient;
@@ -70,7 +73,8 @@
 
         parseResult = Int32.TryParse(User, out usuario);
 
-        //Console.WriteLine(respuesta.resultadoOperacion.Detalle);
+        Console.WriteLine(usuario);
+        Console.WriteLine(Password);
 
         if (parseResult && Password != null && Password.Length > 0)
         {
@@ -139,4 +143,12 @@
         }
     }
 
+    public async Task KeyWasPressed(UIKeyboardEventArgs args)
+    {
+
+        if (args.Key == "Enter")
+        {
+            await LoginAsync();
+        }
+    }
 }

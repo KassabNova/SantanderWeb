@@ -1,7 +1,19 @@
-﻿<Router AppAssembly="typeof(Program).Assembly">
-    <NotFoundContent>
-        <p>Sorry, there's nothing at this address.</p>
-    </NotFoundContent>
-</Router>
+﻿<MatBlazor.MatThemeProvider Theme="@theme">
+
+    <Router AppAssembly="typeof(Program).Assembly">
+        <NotFoundContent>
+            <p>Sorry, there's nothing at this address.</p>
+        </NotFoundContent>
+    </Router>
+
+</MatBlazor.MatThemeProvider>
 <MatBlazor.MatToastContainer />
 
+@code
+{
+    MatBlazor.MatTheme theme = new MatBlazor.MatTheme()
+    {
+        Primary = "#b71c1c",
+        Secondary = "#e53935"
+    };
+}
